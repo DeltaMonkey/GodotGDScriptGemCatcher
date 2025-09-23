@@ -1,5 +1,6 @@
 extends Node2D
 
+
 const EXPLODE = preload("res://Assets/explode.wav")
 const GEM = preload("res://Scenes/Gem/Gem.tscn")
 const MARGIN: float = 70.0
@@ -9,6 +10,10 @@ const MARGIN: float = 70.0
 @onready var paddle: Area2D = $Paddle
 @onready var score_sound: AudioStreamPlayer2D = $ScoreSound
 @onready var sound: AudioStreamPlayer = $Sound
+@onready var score_label: Label = $ScoreLabel
+
+
+var _score: int = 0;
 
 
 func _ready() -> void:
@@ -35,8 +40,11 @@ func stop_all() -> void:
 		if child is Gem:
 			child.set_process(false)
 
+
 func _on_paddle_area_entered(area: Area2D) -> void:
 	print("Collision ", area)
+	_score = _score + 1;
+	score_label.text = "%03d" % _score
 	if score_sound.playing == false:
 		score_sound.position = area.position
 		score_sound.play()
