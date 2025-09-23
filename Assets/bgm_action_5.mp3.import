@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/bgm_action_5.mp3-3e09f1f0d8107c3ffe374700286c
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
