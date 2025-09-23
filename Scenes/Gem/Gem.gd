@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Gem
+
 signal gem_off_screen
 
 const SPEED: float = 100.0
