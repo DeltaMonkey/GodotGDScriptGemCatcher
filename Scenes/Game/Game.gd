@@ -1,6 +1,9 @@
 extends Node2D
 
 
+class_name Game
+
+
 const EXPLODE = preload("res://Assets/explode.wav")
 const GEM = preload("res://Scenes/Gem/Gem.tscn")
 const MARGIN: float = 70.0
@@ -14,17 +17,35 @@ const MARGIN: float = 70.0
 
 
 var _score: int = 0;
+static var _vp_r: Rect2
+
+static func get_vpr() -> Rect2:
+	return _vp_r
+
+func _init() -> void:
+	print("Game:: _init")
+
+
+func update_vp() -> void:
+	_vp_r = get_viewport_rect()
+
+
+func _enter_tree() -> void:
+	print("Game:: _enter_tree")
 
 
 func _ready() -> void:
+	update_vp()
+	get_viewport().size_changed.connect(update_vp)
+	print("Game:: _ready")
 	spawn_gem()
 
 
 func spawn_gem() -> void:
 	var new_gem: Gem = GEM.instantiate()
 	var x_pos: float = randf_range(
-		get_viewport_rect().position.x + MARGIN,
-		get_viewport_rect().end.x - MARGIN)
+		_vp_r.position.x + MARGIN,
+		_vp_r.end.x - MARGIN)
 	new_gem.position = Vector2(x_pos, -MARGIN)
 	new_gem.gem_off_screen.connect(_on_gem_gem_off_screen)
 	add_child(new_gem)
